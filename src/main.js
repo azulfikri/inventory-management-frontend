@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import './assets/styles/global.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import router from './router'
+// import router from './router'
 import { createPinia } from 'pinia'
-import axios from 'axios';
+// import axios from 'axios';
 
-createApp(App).use(createPinia()).use(router).mount('#app')
+// createApp(App).use(createPinia()).use(router).mount('#app')
+createApp(App).use(createPinia()).mount('#app')
