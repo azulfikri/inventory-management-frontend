@@ -1,5 +1,5 @@
 <template>
-  <div class="item-list container py-4 bg-info-subtle">
+  <div class="item-list container py-4 bg-white rounded shadow-sm">
     <div class="header d-flex justify-content-between align-items-center mb-3">
       <h2>Daftar Barang</h2>
 
@@ -12,7 +12,7 @@
         :item="item"
         @edit-item="editItem"
         @delete-item="deleteItem"
-        class="col-md-6 col-lg-4 mb-4"
+        class="col-md-6 mb-4"
       />
     </div>
     <Modal :visible="showForm" @close="cancelEditForm">
@@ -103,8 +103,16 @@ export default {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-header h2 {
+.header h2 {
   color: #4b3f6b;
   font-size: 24px;
+}
+.header .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.header .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
 }
 </style>

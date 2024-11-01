@@ -1,5 +1,5 @@
 <template>
-  <div class="item-card card mb-3">
+  <div class="item-card card mb-3 shadow-sm">
     <div class="card-body">
       <ItemCard
         v-for="item in items"
@@ -65,5 +65,13 @@ export default {
 }
 .item-card .buttons .btn {
   transition: background-color 0.2s, border-color 0.2s;
+}
+.item-card .buttons .btn:hover {
+  background-color: darken(#28a745, 10%);
+  border-color: darken(#28a745, 10%);
+}
+.item-card .buttons .btn.delete:hover {
+  background-color: darken(#dc3545, 10%);
+  border-color: darken(#dc3545, 10%);
 }
 </style>

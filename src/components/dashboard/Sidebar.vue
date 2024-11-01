@@ -89,31 +89,13 @@ export default {
 .sidebar .d-none {
   transform: translateX(-200px);
 }
-/* .sidebar.hidden {
-  transform: translateX(-100%);
-} */
-/* .logo {
-  color: white;
-  font-size: 24px;
-  margin-bottom: 30px;
-  font-weight: bold;
-  text-align: center;
-} */
-/* ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-} */
-/* li {
-  margin-bottom: 20px;
-  text-align: center;
-} */
 .nav-link {
   color: white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 8px;
   padding: 10px 0;
   transition: background-color 0.3s ease;
 }
