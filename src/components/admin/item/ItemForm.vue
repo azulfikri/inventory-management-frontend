@@ -1,57 +1,50 @@
 <template>
   <div>
-    <form @submit.prevent="submitForm">
-      <table>
-        <tbody>
-          <tr>
-            <td>Kode Barang</td>
-            <td>
-              <input
-                type="text"
-                v-model="form.kode"
-                id="kode"
-                :disabled="isEdit"
-                required
-              />
-            </td>
-          </tr>
-
-          <tr>
-            <td>Nama Barang</td>
-            <td>
-              <input type="text" v-model="form.nama" id="nama" required />
-            </td>
-          </tr>
-
-          <tr>
-            <td>Deskripsi</td>
-            <td>
-              <input
-                type="text"
-                v-model="form.deskripsi"
-                id="deskripsi"
-                required
-              />
-            </td>
-          </tr>
-
-          <tr>
-            <td>Stok</td>
-            <td>
-              <input type="number" v-model="form.stok" id="stok" required />
-            </td>
-          </tr>
-
-          <tr>
-            <td></td>
-            <td>
-              <button type="submit">
-                {{ isEdit ? "Simpan Perubahan" : "Tambah Barang" }}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <form @submit.prevent="submitForm" class="mb-3">
+      <div class="mb-3">
+        <label for="kode" class="form-label">Kode Barang</label>
+        <input
+          type="number"
+          v-model="form.kode"
+          id="kode"
+          class="form-control"
+          :disabled="isEdit"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="nama" class="form-label">Nama Barang</label>
+        <input
+          type="text"
+          v-model="form.nama"
+          id="nama"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="deskripsi" class="form-label">Deskripsi</label>
+        <input
+          type="text"
+          v-model="form.deskripsi"
+          id="deskripsi"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stok" class="form-label">Stok</label>
+        <input
+          type="number"
+          v-model="form.stok"
+          id="stok"
+          class="form-control"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-success">
+        {{ isEdit ? "Simpan Perubahan" : "Tambah Barang" }}
+      </button>
     </form>
   </div>
 </template>
@@ -113,35 +106,4 @@ export default {
   emits: ["submit"],
 };
 </script>
-<style scoped>
-/* Gaya untuk tabel */
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-/* Gaya untuk sel tabel */
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-/* Gaya untuk input teks dan number */
-input[type="text"],
-input[type="number"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-/* Gaya untuk tombol submit */
-button[type="submit"] {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-/* Gaya untuk tombol submit saat di-hover */
-button[type="submit"]:hover {
-  background-color: #0a480e;
-}
-</style>
+<style scoped></style>

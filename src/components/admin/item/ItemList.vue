@@ -1,17 +1,18 @@
 <template>
-  <div class="item-list">
-    <div class="header">
+  <div class="item-list container py-4 bg-info-subtle">
+    <div class="header d-flex justify-content-between align-items-center mb-3">
       <h2>Daftar Barang</h2>
 
-      <button class="add-btn" @click="showAddForm">Tambah Item</button>
+      <button class="btn btn-primary" @click="showAddForm">Tambah Item</button>
     </div>
-    <div class="item-cards">
+    <div class="item-cards row">
       <ItemCard
         v-for="item in items"
         :key="item.kode"
         :item="item"
         @edit-item="editItem"
         @delete-item="deleteItem"
+        class="col-md-6 col-lg-4 mb-4"
       />
     </div>
     <Modal :visible="showForm" @close="cancelEditForm">
@@ -98,36 +99,12 @@ export default {
 </script>
 <style scoped>
 .item-list {
-  padding: 24px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
 }
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-h2 {
+header h2 {
   color: #4b3f6b;
   font-size: 24px;
-}
-.add-btn {
-  background-color: #754bc5;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  font-size: 14px;
-}
-.add-btn:hover {
-  background-color: #5a37a0;
-}
-.item-cards {
-  display: flex;
-  flex-direction: column;
 }
 </style>

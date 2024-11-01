@@ -12,7 +12,10 @@
         :isSidebarVisible="isSidebarVisible"
         @showComponent="navigateTo"
       />
-      <div class="main-content" :class="{ expanded: isSidebarVisible }">
+      <div
+        class="main-content bg-secondary-subtle"
+        :class="{ expanded: isSidebarVisible }"
+      >
         <component
           :is="currentView"
           :currentComponent="currentComponent"
@@ -128,16 +131,9 @@ export default {
 
 <style scoped>
 #app {
-  /* font-family: Arial, Helvetica, sans-serif; */
-
-  /* display: flex; */
-
-  /* font: 1em sans-serif; */
   display: flex;
   flex-direction: column;
   height: 100vh;
-
-  /* margin-top: 60px; */
 }
 .app-content {
   display: flex;
