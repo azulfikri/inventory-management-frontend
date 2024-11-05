@@ -12,7 +12,7 @@
           @click.prevent="showComponent('users')"
           class="nav-link text-white d-flex align-items-center"
         >
-          <i class="bi bi-house-door me-2"></i> Users
+          <i class="bi bi-house-door fs-4 me-2"></i> Users
         </a>
       </li>
 
@@ -22,7 +22,7 @@
           @click.prevent="showComponent('items')"
           class="nav-link text-white d-flex align-items-center"
         >
-          <i class="bi bi-box me-2"></i> Items
+          <i class="bi bi-box fs-4 me-2"></i> Items
         </a>
       </li>
 
@@ -32,7 +32,7 @@
           @click.prevent="showComponent('transactions')"
           class="nav-link text-white d-flex align-items-center"
         >
-          <i class="bi bi-cash me-2"></i> Transactions
+          <i class="bi bi-cash fs-4 me-2"></i> Transactions
         </a>
       </li>
 
@@ -72,7 +72,7 @@ export default {
 <style scoped>
 .sidebar {
   width: 200px;
-  background: #4b3f6b;
+  background: #2980b9;
   color: white;
   padding: 14px;
   height: 100vh;
@@ -93,8 +93,8 @@ export default {
   color: white;
   cursor: pointer;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: start;
   margin-left: 8px;
   padding: 10px 0;
   transition: background-color 0.3s ease;

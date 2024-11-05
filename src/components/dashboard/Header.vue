@@ -12,6 +12,7 @@
       </div>
       <div class="role-selection">
         <button
+          class="btn btn-dark"
           @click="selectRole('admin')"
           :class="{ active: currentRole === 'admin' }"
         >
@@ -19,6 +20,7 @@
         </button>
 
         <button
+          class="btn btn-dark"
           @click="selectRole('user')"
           :class="{ active: currentRole === 'user' }"
         >
@@ -71,7 +73,7 @@ export default {
 </script>
 <style scoped>
 header {
-  background-color: #4b3f6b;
+  background-color: #2980b9;
   padding: 10px 20px 10px 0;
   display: flex;
   align-items: center;
@@ -120,24 +122,28 @@ header.expanded {
 .role-selection {
   display: flex;
   justify-content: center;
-  background-color: #4b3f6b;
+  background-color: #2980b9;
   padding: 10px;
 }
 button {
   margin: 0 10px;
   padding: 5px 10px;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
   border: none;
-  background-color: #4b3f6b;
-  color: white;
+  border-radius: 8px;
+  /* background-color: #713dff; */
+  /* color: white; */
   transition: background-color 0.3s ease;
 }
 button:hover {
-  background-color: #6b5bb8;
+  background-color: #ffffff;
+  color: #211f24;
 }
 button.active {
-  background-color: #6b5bb8;
+  background-color: #fff;
+  color: #211f24;
 }
 @media (max-width: 768px) {
   header {
