@@ -1,18 +1,20 @@
 <template>
-  <div class="item-list container py-4 bg-white rounded shadow-sm">
+  <div class="item-list container my-5 bg-white rounded">
     <div class="header d-flex justify-content-between align-items-center mb-3">
-      <h2>Daftar Barang</h2>
+      <h2 class="mt-2">Daftar Barang</h2>
 
-      <button class="btn btn-primary" @click="showAddForm">Tambah Item</button>
+      <button class="btn btn-primary mt-2" @click="showAddForm">
+        Tambah Item
+      </button>
     </div>
-    <div class="item-cards row">
+    <div class="row px-5">
       <ItemCard
         v-for="item in items"
         :key="item.kode"
         :item="item"
         @edit-item="editItem"
         @delete-item="deleteItem"
-        class="col-md-6 mb-4"
+        class="col-md-6 col-lg-4 mb-4"
       />
     </div>
     <Modal :visible="showForm" @close="cancelEditForm">
@@ -43,6 +45,12 @@ export default {
           kode: "2024001",
           nama: "Acer Nitro 15 AN515-58",
           deskripsi: "Intel Core i5 12500H, RTX 3050, RAM 8GB DDR4, LAYAR 15.6",
+          stok: 80,
+        },
+        {
+          kode: "2024002",
+          nama: "Lenovo LOQ 15 15IRH8",
+          deskripsi: "Intel Core i5 13450H, RTX 3050, RAM 8GB DDR4, LAYAR 15.6",
           stok: 80,
         },
         {
@@ -100,8 +108,11 @@ export default {
 <style scoped>
 .item-list {
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+.item-list:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .header h2 {
   color: #4b3f6b;

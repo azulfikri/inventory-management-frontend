@@ -1,6 +1,6 @@
 <template>
   <div class="user-view">
-    <div class="scrollable-content bg-secondary-subtle">
+    <div class="scrollable-content">
       <div v-if="currentComponent === 'items'">
         <ItemList />
       </div>

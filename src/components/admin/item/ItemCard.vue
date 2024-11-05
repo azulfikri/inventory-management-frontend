@@ -1,30 +1,35 @@
 <template>
-  <div class="item-card card mb-3 shadow-sm">
-    <div class="card-body">
-      <ItemCard
-        v-for="item in items"
-        :key="item.kode"
-        :item="item"
-        @edit-item="editItem"
-        @delete-item="deleteItem"
-      />
-      <h3 class="card-title">{{ item.nama }}</h3>
+  <div class="container">
+    <div class="item-card card mb-3 shadow-sm bg-secondary-subtle">
+      <div class="card-body">
+        <ItemCard
+          v-for="item in items"
+          :key="item.kode"
+          :item="item"
+          @edit-item="editItem"
+          @delete-item="deleteItem"
+        />
+        <h3 class="card-title">{{ item.nama }}</h3>
 
-      <p claas="card-text">{{ item.deskripsi }}</p>
+        <p claas="card-text">{{ item.deskripsi }}</p>
 
-      <p class="card-text stock">Stok: {{ item.stok }}</p>
+        <p class="card-text stock">Stok: {{ item.stok }}</p>
 
-      <div class="buttons d-flex gap-2 mt-3">
-        <button @click="$emit('edit-item', item)" class="btn btn-success edit">
-          Edit
-        </button>
+        <div class="buttons d-flex gap-2 mt-3">
+          <button
+            @click="$emit('edit-item', item)"
+            class="btn btn-success edit"
+          >
+            Edit
+          </button>
 
-        <button
-          @click="$emit('delete-item', item.kode)"
-          class="btn btn-danger delete"
-        >
-          Delete
-        </button>
+          <button
+            @click="$emit('delete-item', item.kode)"
+            class="btn btn-danger delete"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>

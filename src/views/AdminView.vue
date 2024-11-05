@@ -1,6 +1,6 @@
 <template>
   <div class="admin-view">
-    <div class="scrollable-content bg-secondary-subtle">
+    <div class="scrollable-content">
       <ItemList
         v-if="currentComponent === 'items'"
         @edit-item="showEditForm"

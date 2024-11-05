@@ -12,10 +12,7 @@
         :isSidebarVisible="isSidebarVisible"
         @showComponent="navigateTo"
       />
-      <div
-        class="main-content bg-secondary-subtle"
-        :class="{ expanded: isSidebarVisible }"
-      >
+      <div class="main-content" :class="{ expanded: isSidebarVisible }">
         <component
           :is="currentView"
           :currentComponent="currentComponent"
