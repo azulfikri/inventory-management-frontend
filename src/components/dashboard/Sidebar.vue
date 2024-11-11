@@ -3,7 +3,15 @@
     <a
       href="#"
       class="logo d-flex justify-content-center align-items-center text-center mb-4 text-white text-decoration-none fw-bold fs-5"
-      >SIMBAR</a
+    >
+      <img
+        src="../../assets/logo.png"
+        alt=""
+        width="30"
+        height="24"
+        class="d-inline-block align-text-top"
+      />
+      SIMBAR</a
     >
     <ul class="nav flex-column fs-6">
       <li
@@ -34,7 +42,7 @@
       </li>
 
       <li
-        class="nav-item"
+        class="nav-item mb-2"
         :class="{ 'active-nav': activeComponent === 'transactions' }"
       >
         <a
@@ -56,7 +64,7 @@
           @click.prevent="setActiveComponent('history')"
           class="nav-link d-flex align-items-center"
         >
-          <i class="bi bi-clock-history me-2"></i> History
+          <i class="bi bi-clock-history fs-4 me-2"></i> History
         </a>
       </li>
     </ul>
@@ -119,7 +127,7 @@ export default {
   transition: background-color 0.3s ease;
 }
 .active-nav {
-  background-color: #ff245bc1;
+  background-color: #191616;
   border-radius: 5px;
 }
 .nav-item:hover {

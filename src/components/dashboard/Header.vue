@@ -26,6 +26,11 @@
         >
           User
         </button>
+        <div class="logout-container">
+          <button class="logout-btn btn btn-outline-light" @click="logout">
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -63,10 +68,25 @@ export default {
   methods: {
     selectRole(role) {
       this.$emit("update-role", role);
+      const authRole = localStorage.getItem("role");
+      const isAuthenticated = Boolean(localStorage.getItem("auth"));
+      if (isAuthenticated && authRole === role) {
+        this.$router.push({ name: role, params: { component: "items" } });
+      } else {
+        alert("You do not have permission to switch to this role.");
+        this.$router.push({ name: "login" });
+        this.$emit("toggle-sidebar", false);
+      }
     },
-
     toggleSidebar() {
       this.$emit("toggle-sidebar");
+    },
+    logout() {
+      localStorage.removeItem("auth");
+      localStorage.removeItem("role");
+      this.$emit("update-role", "admin");
+      this.$emit("toggle-sidebar", false);
+      this.$router.push({ name: "login" });
     },
   },
 };
