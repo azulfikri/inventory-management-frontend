@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { EventBus } from "@/utils/EventBus";
+import { useItemStore } from "@/store/itemStore";
 import ItemCard from "./ItemCard.vue";
 import Modal from "../../Modal.vue";
 import ItemForm from "./ItemForm.vue";
@@ -40,32 +42,28 @@ export default {
   },
   data() {
     return {
-      // items: [
-      //   {
-      //     kode: "2024001",
-      //     nama: "Acer Nitro 15 AN515-58",
-      //     deskripsi: "Intel Core i5 12500H, RTX 3050, RAM 8GB DDR4, LAYAR 15.6",
-      //     stok: 80,
-      //   },
-      //   {
-      //     kode: "2024002",
-      //     nama: "Lenovo LOQ 15 15IRH8",
-      //     deskripsi: "Intel Core i5 13450H, RTX 3050, RAM 8GB DDR4, LAYAR 15.6",
-      //     stok: 80,
-      //   },
-      //   {
-      //     kode: "2024003",
-      //     nama: "Lenovo LOQ 15 15IRH8",
-      //     deskripsi: "Intel Core i5 13450H, RTX 3050, RAM 8GB DDR4, LAYAR 15.6",
-      //     stok: 80,
-      //   },
-      // ],
+      items: [],
       showForm: false,
       selectedItem: null,
       isEdit: false,
     };
   },
+  computed: {
+    // ...mapState(useItemStore, ["items"]), mengambil items dari store pinia
+    items() {
+      return this.itemStore.items; // mengakses items dari store pinia
+    },
+    filteredItems() {
+      return this.items.filter((item) => {
+        return (
+          item.kode.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.nama.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      });
+    },
+  },
   methods: {
+    // ...mapActions(useItemStore, ["addItem", "updateItem", "deleteItem"]), // Mapping actions dari store
     showAddForm() {
       this.selectedItem = { kode: "", nama: "", deskripsi: "", stok: 0 };
       this.isEdit = false;
@@ -85,10 +83,12 @@ export default {
         !isNaN(item.stok)
       ) {
         if (this.isEdit) {
-          const index = this.items.findIndex((i) => i.kode === item.kode);
-          this.items[index] = item;
+          this.itemStore.updateItem(item); //memanggil action update item dari store
+          // const index = this.items.findIndex((i) => i.kode === item.kode);
+          // this.items[index] = item;
         } else {
-          this.items.push(item);
+          this.itemStore.addItem(item); // memanggil action add item dari store
+          // this.items.push(item);
         }
       }
       this.showForm = false;
@@ -99,9 +99,23 @@ export default {
       this.isEdit = false;
     },
     deleteItem(kode) {
-      this.items = this.items.filter((item) => item.kode !== kode);
-      this.$emit("delete-item", kode);
+      this.itemStore.deleteItem(kode); // memanggil action delete item dari store
+      // this.items = this.items.filter((item) => item.kode !== kode);
+      // this.$emit("delete-item", kode);
     },
+    handleSearch(query) {
+      this.searchQuery = query;
+    },
+  },
+  mounted() {
+    EventBus.on("search", this.handleSearch);
+  },
+  beforeUnmount() {
+    EventBus.off("search", this.handleSearch);
+  },
+  setup() {
+    const itemStore = useItemStore();
+    return { itemStore };
   },
 };
 </script>

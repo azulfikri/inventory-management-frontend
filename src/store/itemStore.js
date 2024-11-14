@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-export const useItemStore = defineStore('item', {
+export const useItemStore = defineStore('itemStore', {
     state: () => ({
         items: [
             {
@@ -26,7 +26,8 @@ export const useItemStore = defineStore('item', {
         getItemByKode: (state) => (kode) => {
             return state.items.find(item => item.kode === kode);
         },
-        totalItems: (state) => state.items.length
+        totalItems: (state) => state.items.length,
+        availableItems: (state) => state.items.filter((item) => item.stok > 0),
     },
     actions: {
         addItem(item) {
