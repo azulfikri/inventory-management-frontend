@@ -40,9 +40,13 @@ export default {
     Modal,
     ItemForm,
   },
+  setup() {
+    const itemStore = useItemStore();
+    return { itemStore };
+  },
   data() {
     return {
-      items: [],
+      // items: [],
       showForm: false,
       selectedItem: null,
       isEdit: false,
@@ -112,10 +116,6 @@ export default {
   },
   beforeUnmount() {
     EventBus.off("search", this.handleSearch);
-  },
-  setup() {
-    const itemStore = useItemStore();
-    return { itemStore };
   },
 };
 </script>

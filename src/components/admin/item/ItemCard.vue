@@ -2,13 +2,13 @@
   <div class="container">
     <div class="item-card card mb-3 shadow-sm bg-secondary-subtle">
       <div class="card-body">
-        <ItemCard
+        <!-- <ItemCard
           v-for="item in items"
           :key="item.kode"
           :item="item"
           @edit-item="editItem"
-          @delete-item="deleteItem"
-        />
+          @delete-item="deleteItem" 
+        /> -->
         <h3 class="card-title">{{ item.nama }}</h3>
 
         <p claas="card-text">{{ item.deskripsi }}</p>
