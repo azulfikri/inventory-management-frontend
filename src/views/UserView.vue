@@ -24,6 +24,7 @@ export default {
     currentComponent: {
       type: String,
       required: true,
+      default: currentComponent,
     },
   },
   components: {
