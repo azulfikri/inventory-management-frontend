@@ -25,71 +25,196 @@
 </template>
 
 <script>
-import UserCard from "./UserCard.vue";
+import { computed, onMounted } from "vue";
+
+import { useUserStore } from "@/store/userStore";
+
+import { useAuthStore } from "@/store/authStore";
+
+import UserCard from "@/components/admin/user/UserCard.vue";
+
 import Modal from "@/components/Modal.vue";
-import UserForm from "./UserForm.vue";
+
+import UserForm from "@/components/admin/user/UserForm.vue";
+
+import EventBus from "@/utils/EventBus";
 
 export default {
+  name: "users",
+
   components: {
     UserCard,
+
     Modal,
+
     UserForm,
   },
-  data() {
-    return {
-      users: [
-        { id: "1", username: "Asep", email: "asep@email.com", role: "Admin" },
 
-        { id: "2", username: "Budi", email: "budi@email.com", role: "User" },
-      ],
-      showForm: false,
-      selectedUser: null,
-      isEdit: false,
+  setup() {
+    const userStore = useUserStore();
+
+    const authStore = useAuthStore();
+
+    const users = computed(() => userStore.users);
+
+    onMounted(() => {
+      if (authStore.token) {
+        userStore.fetchUser();
+      } else {
+        console.error("User is not authenticated");
+      }
+    });
+
+    return {
+      users,
+
+      userStore,
+
+      addUser: userStore.addUser,
+
+      updateUser: userStore.updateUser,
+
+      deleteUser: userStore.deleteUser,
     };
   },
+
+  data() {
+    return {
+      showForm: false,
+
+      selectedUser: null,
+
+      isEdit: false,
+
+      searchQuery: "",
+    };
+  },
+
+  computed: {
+    filteredUsers() {
+      return this.users.filter((user) =>
+        user.username.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
+
   methods: {
     showAddForm() {
-      this.selectedUser = { id: null, username: "", role: "" };
+      this.selectedUser = { id: "", username: "", email: "", role: "USER" };
+
       this.isEdit = false;
+
       this.showForm = true;
     },
+
     editUser(user) {
       this.selectedUser = { ...user };
+
       this.isEdit = true;
+
       this.showForm = true;
     },
-    handleSubmit(user) {
-      // Memastikan nama, email, dan role terisi
-      if (user.username && user.email && user.role) {
-        if (this.isEdit) {
-          // Update pengguna yang ada
-          const index = this.users.findIndex((u) => u.id === user.id);
-          if (index !== -1) {
-            this.users[index] = { ...user }; // Mengupdate pengguna yang dipilih
-          }
-        } else {
-          // Tambah pengguna baru
-          user.id = this.users.length + 1; // Generate ID baru berdasarkan jumlah pengguna
-          this.users.push({ ...user }); // Tambah pengguna baru dengan semua data
-        }
+
+    async handleSubmit(user) {
+      if (this.isEdit) {
+        await this.updateUser(user);
+      } else {
+        await this.addUser(user);
       }
-      this.showForm = false; // Tutup form setelah selesai submit
+
+      await this.userStore.fetchUser(); // Fetch latest users
+
+      this.showForm = false;
     },
+
     cancelEditForm() {
       this.showForm = false;
     },
-    confirmDeleteUser(user) {
-      if (confirm(`Apakah Anda yakin ingin menghapus ${user.username}?`)) {
-        this.deleteUser(user.id);
-      }
-    },
-    deleteUser(id) {
-      this.users = this.users.filter((user) => user.id !== id);
 
-      this.$emit("delete-user", id);
+    async handleDeleteUser(id) {
+      await this.deleteUser(id);
+
+      await this.userStore.fetchUser(); // Fetch latest users
+    },
+
+    handleSearch(query) {
+      this.searchQuery = query;
     },
   },
+
+  mounted() {
+    EventBus.on("search", this.handleSearch);
+  },
+
+  beforeUnmount() {
+    EventBus.off("search", this.handleSearch);
+  },
 };
+// import UserCard from "./UserCard.vue";
+// import Modal from "@/components/Modal.vue";
+// import UserForm from "./UserForm.vue";
+
+// export default {
+//   components: {
+//     UserCard,
+//     Modal,
+//     UserForm,
+//   },
+//   data() {
+//     return {
+//       users: [
+//         { id: "1", username: "Asep", email: "asep@email.com", role: "Admin" },
+
+//         { id: "2", username: "Budi", email: "budi@email.com", role: "User" },
+//       ],
+//       showForm: false,
+//       selectedUser: null,
+//       isEdit: false,
+//     };
+//   },
+//   methods: {
+//     showAddForm() {
+//       this.selectedUser = { id: null, username: "", role: "" };
+//       this.isEdit = false;
+//       this.showForm = true;
+//     },
+//     editUser(user) {
+//       this.selectedUser = { ...user };
+//       this.isEdit = true;
+//       this.showForm = true;
+//     },
+//     handleSubmit(user) {
+//       // Memastikan nama, email, dan role terisi
+//       if (user.username && user.email && user.role) {
+//         if (this.isEdit) {
+//           // Update pengguna yang ada
+//           const index = this.users.findIndex((u) => u.id === user.id);
+//           if (index !== -1) {
+//             this.users[index] = { ...user }; // Mengupdate pengguna yang dipilih
+//           }
+//         } else {
+//           // Tambah pengguna baru
+//           user.id = this.users.length + 1; // Generate ID baru berdasarkan jumlah pengguna
+//           this.users.push({ ...user }); // Tambah pengguna baru dengan semua data
+//         }
+//       }
+//       this.showForm = false; // Tutup form setelah selesai submit
+//     },
+//     cancelEditForm() {
+//       this.showForm = false;
+//     },
+//     confirmDeleteUser(user) {
+//       if (confirm(`Apakah Anda yakin ingin menghapus ${user.username}?`)) {
+//         this.deleteUser(user.id);
+//       }
+//     },
+//     deleteUser(id) {
+//       this.users = this.users.filter((user) => user.id !== id);
+
+//       this.$emit("delete-user", id);
+//     },
+//   },
+// };
 </script>
 <style scoped>
 .user-list {

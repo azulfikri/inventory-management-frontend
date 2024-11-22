@@ -11,7 +11,7 @@
       </p>
     </div>
 
-    <div>
+    <div class="auth-container bg-light p-4 rounded shadow">
       <transition name="fade" mode="out-in">
         <component :is="activeComponent" @switch="setActiveComponent" />
       </transition>
