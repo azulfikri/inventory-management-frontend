@@ -94,10 +94,9 @@ export default {
       this.ShowComponent(component);
     },
     ShowComponent(component) {
-      this.$emit("showComponent", component);
+      this.$router.push({ name: this.currentRole, params: { component } });
     },
   },
-  emits: ["showComponent"],
 };
 </script>
 <style scoped>

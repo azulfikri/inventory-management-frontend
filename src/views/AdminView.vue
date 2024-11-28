@@ -47,6 +47,7 @@ export default {
     currentComponent: {
       type: String,
       Required: true,
+      default: "items",
     },
   },
 

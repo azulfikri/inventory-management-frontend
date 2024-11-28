@@ -1,5 +1,5 @@
 <template>
-  <div class="item-list container my-5 bg-white rounded">
+  <div class="item-list container my-1 bg-white rounded">
     <div class="header d-flex justify-content-between align-items-center mb-3">
       <h2 class="mt-2">Daftar Barang</h2>
 

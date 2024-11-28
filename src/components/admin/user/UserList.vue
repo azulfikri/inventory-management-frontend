@@ -142,7 +142,7 @@ export default {
     },
   },
 
-  mounted() {
+  onmounted() {
     EventBus.on("search", this.handleSearch);
   },
 

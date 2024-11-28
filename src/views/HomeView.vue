@@ -3,7 +3,7 @@
     class="home-view d-flex flex-column align-items-center justify-content-center min-vh-100 bg-custom text-white"
   >
     <div class="text-center mb-4 welcome-text">
-      <h1 class="display-4 fw-bold mb-3">Welcome to Simbok</h1>
+      <h1 class="display-4 fw-bold mb-3">Welcome to Simbar</h1>
 
       <p class="lead mb-4">
         A powerful platform to efficiently manage your inventory and streamline

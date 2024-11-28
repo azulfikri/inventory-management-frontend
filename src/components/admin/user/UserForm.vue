@@ -102,7 +102,7 @@ export default {
             role: newUser.role,
           };
         } else {
-          this.resetform();
+          this.resetForm();
         }
       },
     },
