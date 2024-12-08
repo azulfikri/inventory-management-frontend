@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import apiClient from "@/plugins/axios";
-
 export const useUserStore = defineStore("userStore", {
   state: () => ({
     users: [],

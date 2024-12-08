@@ -72,7 +72,10 @@ export const register = async (username, email, password) => {
     if (error.response) {
       switch (error.response.status) {
         case 400:
-          throw new Error(error.response.data.message || "User already exists");
+          throw new Error(
+            error.response.data.message ||
+              "Username atau password sudah digunakan, silahkan gunakan username lain"
+          );
 
         default:
           throw new Error(error.response.data.message || "An error occurred");

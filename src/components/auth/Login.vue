@@ -53,7 +53,6 @@ export default {
   data() {
     return {
       username: "",
-
       password: "",
       error: "",
     };
@@ -74,7 +73,10 @@ export default {
           this.$router.push({ name: "user" });
         }
       } catch (error) {
-        this.error = error.message;
+        this.error = "Username atau password tidak sesuai";
+        setTimeout(() => {
+          this.error = "";
+        }, 5000);
       }
     },
   },

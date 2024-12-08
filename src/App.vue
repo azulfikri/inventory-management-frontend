@@ -137,7 +137,7 @@ body {
 
 .main-content {
   flex-grow: 1;
-  padding: 20px;
+  /* padding: 20px; */
   background-color: #ffffff;
 
   transition: margin-left 0.3s ease;

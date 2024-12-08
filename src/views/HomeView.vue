@@ -53,7 +53,7 @@ export default {
 
   overflow: auto;
 
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .fade-enter-active,

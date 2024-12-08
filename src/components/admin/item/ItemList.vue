@@ -10,7 +10,7 @@
     <div class="row px-5">
       <ItemCard
         v-for="item in items"
-        :key="item.kode"
+        :key="item.id"
         :item="item"
         @edit-item="editItem"
         @delete-item="deleteItem"
@@ -29,12 +29,15 @@
 </template>
 
 <script>
-import { EventBus } from "@/utils/EventBus";
+import { computed, onMounted } from "vue";
 import { useItemStore } from "@/store/itemStore";
+import { useAuthStore } from "@/store/authStore";
+import { EventBus } from "@/utils/EventBus";
 import ItemCard from "./ItemCard.vue";
 import Modal from "../../Modal.vue";
 import ItemForm from "./ItemForm.vue";
 export default {
+  name: "items",
   components: {
     ItemCard,
     Modal,
@@ -42,7 +45,22 @@ export default {
   },
   setup() {
     const itemStore = useItemStore();
-    return { itemStore };
+    const authStore = useAuthStore();
+    const items = computed(() => itemStore.items);
+    onMounted(() => {
+      if (authStore.token) {
+        itemStore.fetchItems();
+      } else {
+        console.error("Items is not found");
+      }
+    });
+    return {
+      items,
+      itemStore,
+      addItem: itemStore.addItem,
+      updateItem: itemStore.updateItem,
+      deleteItem: itemStore.deleteItem,
+    };
   },
   data() {
     return {
@@ -50,26 +68,25 @@ export default {
       showForm: false,
       selectedItem: null,
       isEdit: false,
+      searchQuery: "",
     };
   },
   computed: {
     // ...mapState(useItemStore, ["items"]), mengambil items dari store pinia
-    items() {
-      return this.itemStore.items; // mengakses items dari store pinia
-    },
+    // items() {
+    //   return this.itemStore.items; // mengakses items dari store pinia
+    // },
     filteredItems() {
-      return this.items.filter((item) => {
-        return (
-          item.kode.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.nama.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
-      });
+      return this.items.filter(
+        (item) =>
+          item.id.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
     },
   },
   methods: {
-    // ...mapActions(useItemStore, ["addItem", "updateItem", "deleteItem"]), // Mapping actions dari store
     showAddForm() {
-      this.selectedItem = { kode: "", nama: "", deskripsi: "", stok: 0 };
+      this.selectedItem = { id: "", name: "", description: "", quantity: 0 };
       this.isEdit = false;
       this.showForm = true;
     },
@@ -78,32 +95,26 @@ export default {
       this.isEdit = true;
       this.showForm = true;
     },
-    handleSubmit(item) {
-      if (
-        item.kode &&
-        item.nama &&
-        item.deskripsi &&
-        item.stok !== null &&
-        !isNaN(item.stok)
-      ) {
-        if (this.isEdit) {
-          this.itemStore.updateItem(item); //memanggil action update item dari store
-          // const index = this.items.findIndex((i) => i.kode === item.kode);
-          // this.items[index] = item;
-        } else {
-          this.itemStore.addItem(item); // memanggil action add item dari store
-          // this.items.push(item);
-        }
+    async handleSubmit(item) {
+      if (this.isEdit) {
+        await this.updateItem(item); //memanggil action update item dari store
+        // const index = this.items.findIndex((i) => i.kode === item.kode);
+        // this.items[index] = item;
+      } else {
+        await this.addItem(item); // memanggil action add item dari store
+        // this.items.push(item);
       }
+      await this.itemStore.fetchItems();
       this.showForm = false;
     },
     cancelEditForm() {
       this.showForm = false;
-      this.selectedItem = null;
-      this.isEdit = false;
+      // this.selectedItem = null;
+      // this.isEdit = false;
     },
-    deleteItem(kode) {
-      this.itemStore.deleteItem(kode); // memanggil action delete item dari store
+    async handleDeleteItem(id) {
+      await this.deleteItem(id);
+      await this.itemStore.fetchItems(); // memanggil action delete item dari store
       // this.items = this.items.filter((item) => item.kode !== kode);
       // this.$emit("delete-item", kode);
     },
@@ -111,7 +122,7 @@ export default {
       this.searchQuery = query;
     },
   },
-  mounted() {
+  onmounted() {
     EventBus.on("search", this.handleSearch);
   },
   beforeUnmount() {

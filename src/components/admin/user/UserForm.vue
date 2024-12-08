@@ -159,30 +159,4 @@ export default {
 .alert {
   margin-top: 1rem;
 }
-/* table {
-  width: 100%;
-  border-collapse: collapse;
-}
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-button[type="submit"] {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-button[type="submit"]:hover {
-  background-color: #45a049;
-} */
 </style>

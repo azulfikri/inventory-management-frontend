@@ -8,7 +8,7 @@
         <label for="kode" class="form-label">Kode Barang</label>
         <input
           type="number"
-          v-model="form.kode"
+          v-model="form.id"
           id="kode"
           class="form-control"
           :disabled="isEdit"
@@ -19,7 +19,7 @@
         <label for="nama" class="form-label">Nama Barang</label>
         <input
           type="text"
-          v-model="form.nama"
+          v-model="form.name"
           id="nama"
           class="form-control"
           required
@@ -29,7 +29,7 @@
         <label for="deskripsi" class="form-label">Deskripsi</label>
         <input
           type="text"
-          v-model="form.deskripsi"
+          v-model="form.description"
           id="deskripsi"
           class="form-control"
           required
@@ -39,12 +39,13 @@
         <label for="stok" class="form-label">Stok</label>
         <input
           type="number"
-          v-model="form.stok"
+          v-model="form.quantity"
           id="stok"
           class="form-control"
           required
         />
       </div>
+      <div v-if="form.error" class="alert alert-danger">{{ form.error }}</div>
       <button type="submit" class="btn btn-success">
         {{ isEdit ? "Simpan Perubahan" : "Tambah Barang" }}
       </button>
@@ -52,6 +53,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   props: {
     item: {
@@ -67,10 +70,11 @@ export default {
   data() {
     return {
       form: {
-        kode: "",
-        nama: "",
-        deskripsi: "",
-        stok: 0,
+        id: "",
+        name: "",
+        description: "",
+        quantity: 0,
+        error: "",
       },
     };
   },
@@ -80,28 +84,58 @@ export default {
       handler(newItem) {
         // Jika dalam mode edit, mengisi form dengan data item
         if (this.isEdit) {
-          this.form = { ...newItem };
+          this.form = {
+            id: newItem.id,
+            name: newItem.name,
+            description: newItem.description,
+            quantity: newItem.quantity,
+          };
         } else {
           // Jika bukan mode edit, reset form ke nilai awal
-          this.form = {
-            kode: "",
-            nama: "",
-            deskripsi: "",
-            stok: 0,
-          };
+          this.resetForm();
         }
       },
     },
   },
   methods: {
+    resetForm() {
+      this.form = {
+        id: "",
+        name: "",
+        description: "",
+        quantity: "",
+        error: "",
+      };
+    },
     // Metode untuk menangani submit form
-    submitForm() {
-      // Memastikan semua field dalam form terisi
-      if (this.form.stok === 0) {
-        alert("Stok tidak boleh bernilai 0");
-        // Memancarkan event submit dengan data form
-      } else {
+    async submitForm() {
+      try {
+        // Memastikan semua field dalam form terisi
+        if (this.form.quantity === 0) {
+          this.form.error = "Stok tidak boleh 0";
+          return;
+          // alert("Stok tidak boleh bernilai 0");
+          // Memancarkan event submit dengan data form
+        }
+        this.form.error = "";
+        const payload = {
+          id: this.form.id,
+          name: this.form.name,
+          description: this.form.description,
+          quantity: this.form.quantity,
+        };
+        console.log("Sending data to server:", payload);
+        if (this.isEdit) {
+          await axios.put(`/items/${this.item.id}`, payload);
+        } else {
+          const response = await axios.post("/items", payload);
+          console.log("Item added:", response.data);
+        }
         this.$emit("submit", this.form);
+        this.resetForm();
+      } catch (error) {
+        console.error("Failed to submit form:", error);
+        this.form.error = "Failed to submit form:" + error.message;
       }
     },
   },

@@ -9,11 +9,11 @@
           @edit-item="editItem"
           @delete-item="deleteItem" 
         /> -->
-        <h3 class="card-title">{{ item.nama }}</h3>
+        <h3 class="card-title">{{ item.name }}</h3>
 
-        <p claas="card-text">{{ item.deskripsi }}</p>
+        <p claas="card-text">{{ item.description }}</p>
 
-        <p class="card-text stock">Stok: {{ item.stok }}</p>
+        <p class="card-text stock">Stok: {{ item.quantity }}</p>
 
         <div class="buttons d-flex gap-2 mt-3">
           <button
@@ -24,7 +24,7 @@
           </button>
 
           <button
-            @click="$emit('delete-item', item.kode)"
+            @click="$emit('delete-item', item.id)"
             class="btn btn-danger delete"
           >
             Delete

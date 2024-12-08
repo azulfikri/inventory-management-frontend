@@ -61,7 +61,7 @@ export default {
 
   methods: {
     showEditForm(item) {
-      this.selectedItem = false;
+      this.selectedItem = item;
       this.isEdit = true;
       this.showtForm = true;
     },
